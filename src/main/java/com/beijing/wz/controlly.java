@@ -2,6 +2,7 @@ package com.beijing.wz;
 
 
 
+import com.beijing.Until.Page;
 import com.beijing.Until.UserUntil;
 import com.beijing.bean.TUser;
 import com.beijing.service.LoginService;
@@ -10,6 +11,7 @@ import javafx.fxml.LoadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
@@ -39,7 +41,7 @@ public class controlly {
         UserUntil userUntil = new UserUntil();
         TUser tUser = null;
         try {
-            tUser = loginService.qu1eryLogin(Loginacct, userpswd, type);
+            tUser = loginService.queryLogin(Loginacct, userpswd, type);
         } catch (LoadException e) {
             e.printStackTrace();
             userUntil.setSunccess(false);
@@ -52,5 +54,35 @@ public class controlly {
             return userUntil;
 
 
+    }
+
+    @RequestMapping("/user")
+    public String userIndex(){
+
+        return "user";
+    }
+
+
+
+    @RequestMapping("/user/index01")
+    @ResponseBody
+    public UserUntil index01(HttpSession httpSession, @RequestParam(value = "pageno", required = false, defaultValue = "1") Integer pageno,
+                        @RequestParam(value = "pagesize", required = false, defaultValue = "10") Integer pageLast,String queryText) throws LoadException {
+
+
+            Page page1 = new Page(pageno,pageLast);
+
+
+
+            UserUntil  ajaK = loginService.q2ueryLimit(page1);
+
+
+
+
+
+
+        ajaK.setSunccess(true);
+
+        return ajaK;
     }
 }

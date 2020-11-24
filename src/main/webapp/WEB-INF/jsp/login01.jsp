@@ -26,7 +26,7 @@
 
 <div class="container">
 
-    <form id="loginForm" action="${pageContext.request.contextPath}/doLogin.do" method="post" class="form-signin" role="form">
+    <form id="loginForm" method="post" class="form-signin" role="form">
         <h2 class="form-signin-heading"><i class="glyphicon glyphicon-log-in"></i> 用户登录</h2>
         <div class="form-group has-success has-feedback">
             <input type="text" class="form-control" id="inputSuccess4" name="Loginacct" placeholder="请输入登录账号" autofocus>
@@ -79,6 +79,7 @@
 
             },
             success : function (userUntil) {
+
                 if (userUntil.sunccess) {
                     window.location.href = "${pageContext.request.contextPath}/main.htm";
                 }else {

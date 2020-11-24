@@ -183,6 +183,8 @@
 <script src="${pageContext.request.contextPath}/script/docs.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jquery/layer/layer.js"></script>
 
+<script type="text/javascript" src="${pageContext.request.contextPath}/script/menu.js"></script>
+</body>
 <script type="text/javascript">
     $(function () {
         $(".list-group-item").click(function(){
@@ -195,6 +197,7 @@
                 }
             }
         });
+
         queryPageUser(1);
     });
     $("tbody .btn-success").click(function(){
@@ -210,7 +213,6 @@
         queryPageUser(pageno);
     }
 
-
     var jsonObj = {
         "pageno" : 1,
         "pagesize" : 10
@@ -219,73 +221,76 @@
 
     var loadingIndex = -1 ;
     function queryPageUser(pageno){
+
         jsonObj.pageno = pageno ;
         $.ajax({
             type : "POST",
             data : jsonObj,
             url : "${pageContext.request.contextPath}/user/index01.do",
             beforeSend : function(){
-                loadingIndex = layer.load(2, {time: 10*1000});
+
                 return true ;
             },
-            success : function(ajaK){
-                layer.close(loadingIndex);
-                if(ajaK.success){
-                    var limitBean = ajaK.limitBean ;
-                    var userLis = limitBean.userLis ;
-
-                    var content = '';
-
-                    $.each(userLis,function(i,n){
-                        content+='<tr>';
-                        content+='  <td>'+(i+1)+'</td>';
-                        content+='  <td><input type="checkbox" id="'+n.id+'"></td>';
-                        content+='  <td>'+n.loginacct+'</td>';
-                        content+='  <td>'+n.username+'</td>';
-                        content+='  <td>'+n.email+'</td>';
-                        content+='  <td>';
-                        content+='	  <button type="button" onclick="window.location.href=\'${pageContext.request.contextPath}/user/doAssignRole.htm?id='+n.id+'\'" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>';
-                        content+='	  <button type="button" onclick="window.location.href=\'${pageContext.request.contextPath}/user/toUpdate.htm?id='+n.id+'\'" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>';
-                        content+='	  <button type="button" onclick="deleteUser('+n.id+',\''+n.loginacct+'\')" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>';
-                        content+='  </td>';
-                        content+='</tr>';
-                    });
 
 
-                    $("tbody").html(content);
+        success : function(ajaK){
 
-                    var contentBar = '';
+            if(ajaK.sunccess){
+                var limitBean = ajaK.page ;
 
-                    if(limitBean.pageno==1 ){
-                        contentBar+='<li class="disabled"><a href="#">上一页</a></li>';
-                    }else{
-                        contentBar+='<li><a href="#" onclick="pageChange('+(limitBean.pageno-1)+')">上一页</a></li>';
-                    }
+                var userLis = limitBean.listpage ;
 
-                    for(var i = 1 ; i<= limitBean.totalPages ; i++ ){
-                        contentBar+='<li';
-                        if(limitBean.pageno==i){
-                            contentBar+=' class="active"';
-                        }
-                        contentBar+='><a href="#" onclick="pageChange('+i+')">'+i+'</a></li>';
-                    }
+                var content = '';
+                $.each(userLis,function(i,n){
+                    content+='<tr>';
+                    content+='  <td>'+(i+1)+'</td>';
+                    content+='  <td><input type="checkbox" id="'+n.id+'"></td>';
+                    content+='  <td>'+n.loginacct+'</td>';
+                    content+='  <td>'+n.username+'</td>';
+                    content+='  <td>'+n.email+'</td>';
+                    content+='  <td>';
+                    content+='	  <button type="button" onclick="window.location.href=\'${pageContext.request.contextPath}/user/doAssignRole.htm?id='+n.id+'\'" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>';
+                    content+='	  <button type="button" onclick="window.location.href=\'${pageContext.request.contextPath}/user/toUpdate.htm?id='+n.id+'\'" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>';
+                    content+='	  <button type="button" onclick="deleteUser('+n.id+',\''+n.loginacct+'\')" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>';
+                    content+='  </td>';
+                    content+='</tr>';
+                });
 
-                    if(limitBean.pageno==limitBean.totalPages ){
-                        contentBar+='<li class="disabled"><a href="#">下一页</a></li>';
-                    }else{
-                        contentBar+='<li><a href="#" onclick="pageChange('+(limitBean.pageno+1)+')">下一页</a></li>';
-                    }
 
-                    $(".pagination").html(contentBar);
+                $("tbody").html(content);
 
+                var contentBar = '';
+
+                if(limitBean.pageno==1 ){
+                    contentBar+='<li class="disabled"><a href="#">上一页</a></li>';
                 }else{
-                    layer.msg(result.message, {time:1000, icon:5, shift:6});
+                    contentBar+='<li><a href="#" onclick="pageChange('+(limitBean.pageno-1)+')">上一页</a></li>';
                 }
-            },
-            error : function(){
-                layer.msg("加载数据失败!", {time:1000, icon:5, shift:6});
+
+                for(var i = 1 ; i<= limitBean.totalsize ; i++ ){
+                    contentBar+='<li';
+                    if(limitBean.pageno==i){
+                        contentBar+=' class="active"';
+                    }
+                    contentBar+='><a href="#" onclick="pageChange('+i+')">'+i+'</a></li>';
+                }
+
+                if(limitBean.pageno==limitBean.totalsize ){
+                    contentBar+='<li class="disabled"><a href="#">下一页</a></li>';
+                }else{
+                    contentBar+='<li><a href="#" onclick="pageChange('+(limitBean.pageno+1)+')">下一页</a></li>';
+                }
+
+                $(".pagination").html(contentBar);
+
+            }else{
+
             }
-        });
+        },
+        error : function(){
+
+        }
+    });
     }
 
 
@@ -391,7 +396,7 @@
 
                 traditional:true,
                 data : {
-                     "datas" :datas,
+                    "datas" :datas,
                 },
                 url : "${pageContext.request.contextPath}/user/doDeleteBatch.do",
                 beforeSend : function() {
@@ -415,6 +420,4 @@
     });
 
 </script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/script/menu.js"></script>
-</body>
 </html>
