@@ -249,7 +249,7 @@
                     content+='  <td>'+n.username+'</td>';
                     content+='  <td>'+n.email+'</td>';
                     content+='  <td>';
-                    content+='	  <button type="button" onclick="window.location.href=\'${pageContext.request.contextPath}/user/doAssignRole.htm?id='+n.id+'\'" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>';
+                    content+='	  <button type="button" oncl ick="window.location.href=\'${pageContext.request.contextPath}/user/doAssignRole.htm?id='+n.id+'\'" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>';
                     content+='	  <button type="button" onclick="window.location.href=\'${pageContext.request.contextPath}/user/toUpdate.htm?id='+n.id+'\'" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>';
                     content+='	  <button type="button" onclick="deleteUser('+n.id+',\''+n.loginacct+'\')" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>';
                     content+='  </td>';
@@ -304,8 +304,9 @@
 
     function deleteUser(id,loginacct){
 
-        layer.confirm("确认要删除["+loginacct+"]用户吗?",  {icon: 3, title:'提示'}, function(cindex){
-            layer.close(cindex);
+         if (window.confirm("确定要删除嘛")) {
+             alert("删除中")
+         }
             $.ajax({
                 type : "POST",
                 data : {
@@ -315,20 +316,18 @@
                 beforeSend : function() {
                     return true ;
                 },
-                success : function(result){
-                    if(result.success){
-                        window.location.href="${pageContext.request.contextPath}/user/index.htm";
+                success : function(userUntil){
+                    if (userUntil.sunccess) {
+                        window.location.href = "${pageContext.request.contextPath}/user.htm";
                     }else{
-                        layer.msg("删除用户失败", {time:1000, icon:5, shift:6});
+                      alert("删除失败")
                     }
                 },
                 error : function(){
-                    layer.msg("删除失败", {time:1000, icon:5, shift:6});
+
                 }
             });
-        }, function(cindex){
-            layer.close(cindex);
-        });
+
 
     }
 
@@ -361,11 +360,15 @@
 
 
     $("#deleteBatchBtn").click(function(){
+        if(window.confirm("确定要删除嘛")){
+            alert("正在删除")
+        }
+
 
         var selectCheckbox = $("tbody tr td input:checked");
 
         if(selectCheckbox.length==0){
-            layer.msg("至少选择一个用户进行删除!请选择用户!", {time:1000, icon:5, shift:6});
+
             return false ;
         }
 
@@ -388,8 +391,7 @@
         });
 
 
-        layer.confirm("确认要删除这些用户吗?",  {icon: 3, title:'提示'}, function(cindex){
-            layer.close(cindex);
+
             $.ajax({
                 type : "POST",
                 //data : idStr,
@@ -402,20 +404,18 @@
                 beforeSend : function() {
                     return true ;
                 },
-                success : function(result){
-                    if(result.success){
-                        window.location.href="${pageContext.request.contextPath}/user/index.htm";
+                success : function(userUntil){
+                    if(userUntil.sunccess){
+                        window.location.href="${pageContext.request.contextPath}/user.htm";
                     }else{
-                        layer.msg("删除用户失败", {time:1000, icon:5, shift:6});
+
                     }
                 },
                 error : function(){
-                    layer.msg("删除失败", {time:1000, icon:5, shift:6});
+
                 }
             });
-        }, function(cindex){
-            layer.close(cindex);
-        });
+
 
     });
 

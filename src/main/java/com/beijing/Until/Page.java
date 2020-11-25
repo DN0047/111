@@ -5,11 +5,13 @@ import com.beijing.bean.TUser;
 import java.util.List;
 
 public class Page {
-    private  Integer pageno;
-    private  Integer pagesize;
-    private  Integer totalno;
-    private  Integer totalsize;
-    public   List<TUser> listpage;
+    private Integer pageno;
+    private Integer pagesize;
+    private Integer totalno;
+    private Integer totalsize;
+    public List<TUser> listpage;
+
+    private String queryText;
 
     public Page() {
 
@@ -18,6 +20,14 @@ public class Page {
     public Page(Integer pageno, Integer pagesize) {
         this.pageno = pageno;
         this.pagesize = pagesize;
+    }
+
+    public String getQueryText() {
+        return queryText;
+    }
+
+    public void setQueryText(String queryText) {
+        this.queryText = queryText;
     }
 
     public Integer getPageno() {
@@ -43,7 +53,7 @@ public class Page {
 
     public void setTotalno(Integer totalno) {
         this.totalno = totalno;
-        this.totalsize=(this.totalno%pagesize==0) ? (this.totalno/pagesize) :(this.totalno/pagesize+1);
+        this.totalsize = (this.totalno % pagesize == 0) ? (this.totalno / pagesize) : (this.totalno / pagesize + 1);
     }
 
     public Integer getTotalsize() {
@@ -55,9 +65,8 @@ public class Page {
     }
 
 
-
-    public int indexOf(){
-        return (pageno-1)*pagesize;
+    public int indexOf() {
+        return (pageno - 1) * pagesize;
 
     }
 }

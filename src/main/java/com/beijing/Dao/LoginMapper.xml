@@ -4,18 +4,75 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.beijing.Dao.LoginMapper">
-  <select id="equalsLogin" resultType="TUser">
-    select * from t_user where loginacct=#{loginacct} and userpswd=#{userpswd}
+    <select id="equalsLogin" resultType="TUser">
 
-  </select>
 
-  <select id="selectLimit" resultType="TUser">
-    select * from t_user limit #{i},#{pagesize}
+        select *
+        from t_user
+        where loginacct = #{loginacct}
+          and userpswd = #{userpswd}
 
-  </select>
+    </select>
 
-  <select id="selectTotalsize" resultType="int">
-    select count(*) from t_user
+    <select id="selectLimit" resultType="TUser">
+        select * from t_user
+        <where>
+            <choose>
+                <when test="queryText != null and  queryText != '' ">
+                    username like '%' #{queryText} '%'
+                </when>
+            </choose>
+        </where>
+        limit #{i},#{pagesize}
+    </select>
 
-  </select>
+
+    <!--<select id="selectLimit" resultType="TUser">
+      select * from t_user limit #{i},#{pagesize}
+
+    </select>-->
+
+    <select id="selectTotalsize" resultType="int">
+        select count(*)
+        from t_user
+
+    </select>
+
+    <insert id="insertUser">
+        insert into t_user (loginacct, username, email, userpswd)
+        values (#{loginacct}, #{username}, #{email}, #{userpswd})
+    </insert>
+
+    <update id="updateUser">
+        update t_user
+        set username=#{username},
+            email=#{email},
+            loginacct=#{loginacct}
+        where id = #{id}
+    </update>
+    <delete id="delectUserRole">
+        delete
+        from t_user_role
+        where userid = #{id}
+
+    </delete>
+    <delete id="delectUser">
+        delete
+        from t_user
+        where id = #{id}
+
+    </delete>
+
+    <delete id="delectUserAll">
+        delete from t_user
+        <where>
+            id in
+            <foreach collection="array" item="idtas" open="(" close=")" separator=",">
+                #{idtas}
+            </foreach>
+        </where>
+
+    </delete>
+
+
 </mapper>
