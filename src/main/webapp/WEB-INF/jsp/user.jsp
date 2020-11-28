@@ -70,7 +70,7 @@
                         <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 权限管理 <span class="badge" style="float:right">3</span></span>
                         <ul style="margin-top:10px;">
                             <li style="height:30px;">
-                                <a href="${pageContext.request.contextPath}/user/toIndex.htm" style="color:red;"><i class="glyphicon glyphicon-user"></i> 用户维护</a>
+                                <a href="${pageContext.request.contextPath}/user.htm" style="color:red;"><i class="glyphicon glyphicon-user"></i> 用户维护</a>
                             </li>
                             <li style="height:30px;">
                                 <a href="role.html"><i class="glyphicon glyphicon-king"></i> 角色维护</a>
@@ -249,7 +249,7 @@
                     content+='  <td>'+n.username+'</td>';
                     content+='  <td>'+n.email+'</td>';
                     content+='  <td>';
-                    content+='	  <button type="button" oncl ick="window.location.href=\'${pageContext.request.contextPath}/user/doAssignRole.htm?id='+n.id+'\'" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>';
+                    content+='	  <button type="button" onclick="window.location.href=\'${pageContext.request.contextPath}/user/doAssignRole.htm?id='+n.id+'\'" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>';
                     content+='	  <button type="button" onclick="window.location.href=\'${pageContext.request.contextPath}/user/toUpdate.htm?id='+n.id+'\'" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>';
                     content+='	  <button type="button" onclick="deleteUser('+n.id+',\''+n.loginacct+'\')" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>';
                     content+='  </td>';

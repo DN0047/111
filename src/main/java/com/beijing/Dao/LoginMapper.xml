@@ -74,5 +74,30 @@
 
     </delete>
 
+    <select id="selectRoleAll" resultType="TRole">
+        select * from t_role
+    </select>
+
+    <select id="selectRoleID" resultType="TRole">
+        select t_role.id,name from t_user_role,t_role where userid=#{id} and roleid=t_role.id;
+    </select>
+
+    <insert id="insertRole">
+
+        insert into t_user_role (userid, roleid) VALUES
+        <foreach collection="ids" separator="," item="ids">
+            (#{userid},#{ids})
+        </foreach>
+
+    </insert>
+
+    <delete id="delectRole">
+        delete from t_user_role where userid=#{userid} and roleid in
+<foreach collection="ids" item="id" open="(" close=")" separator=",">
+    #{id}
+
+</foreach>
+
+    </delete>
 
 </mapper>

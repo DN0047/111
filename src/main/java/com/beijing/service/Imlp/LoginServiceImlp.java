@@ -3,6 +3,7 @@ package com.beijing.service.Imlp;
 import com.beijing.Dao.LoginMapper;
 import com.beijing.Until.Page;
 import com.beijing.Until.UserUntil;
+import com.beijing.bean.TRole;
 import com.beijing.bean.TUser;
 import com.beijing.service.LoginService;
 import javafx.fxml.LoadException;
@@ -76,6 +77,37 @@ public class LoginServiceImlp implements LoginService {
 
         if (i != datas.length) {
             throw new LoadException("删除失败");
+        }
+    }
+
+    @Override
+    public List<TRole> queryRoleAll() {
+        List<TRole> tRoles= loginMapper.selectRoleAll();
+
+        return tRoles;
+    }
+
+    @Override
+    public List<TRole> queryRoleID(Integer id) {
+        List<TRole> tRole= loginMapper.selectRoleID(id);
+        return tRole;
+    }
+
+    @Override
+    public void doAssignRole01(Integer userid, Integer[] ids) throws LoadException {
+       int i= loginMapper.insertRole(userid,ids);
+       if (ids.length != i){
+
+           throw  new LoadException("变更失败");
+       }
+    }
+
+    @Override
+    public void doUnAssignRole02(Integer userid, Integer[] ids) throws LoadException {
+        int i= loginMapper.delectRole(userid,ids);
+        if (ids.length != i){
+
+            throw  new LoadException("变更失败");
         }
     }
 

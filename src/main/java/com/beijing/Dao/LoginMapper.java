@@ -1,5 +1,6 @@
 package com.beijing.Dao;
 
+import com.beijing.bean.TRole;
 import com.beijing.bean.TUser;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,4 +24,12 @@ public interface LoginMapper {
 
 
     int delectUserAll(Integer[] datas);
+
+    List<TRole> selectRoleAll();
+
+    List<TRole> selectRoleID(Integer id);
+
+    int insertRole(@Param("userid") Integer userid, @Param("ids") Integer[] ids);
+
+    int delectRole(@Param("userid") Integer userid, @Param("ids") Integer[] ids);
 }

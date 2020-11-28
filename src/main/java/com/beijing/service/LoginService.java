@@ -2,8 +2,11 @@ package com.beijing.service;
 
 import com.beijing.Until.Page;
 import com.beijing.Until.UserUntil;
+import com.beijing.bean.TRole;
 import com.beijing.bean.TUser;
 import javafx.fxml.LoadException;
+
+import java.util.List;
 
 public interface LoginService {
 
@@ -19,4 +22,12 @@ public interface LoginService {
 
 
     void doDeleteBatch(Integer[] datas) throws LoadException;
+
+    List<TRole> queryRoleAll();
+
+    List<TRole> queryRoleID(Integer id);
+
+    void doAssignRole01(Integer userid, Integer[] ids) throws LoadException;
+
+    void doUnAssignRole02(Integer userid, Integer[] ids) throws LoadException;
 }

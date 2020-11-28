@@ -3,6 +3,7 @@ package com.beijing.wz;
 
 import com.beijing.Until.Page;
 import com.beijing.Until.UserUntil;
+import com.beijing.bean.TRole;
 import com.beijing.bean.TUser;
 import com.beijing.service.LoginService;
 
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 
 @Controller
@@ -162,5 +166,57 @@ public class controlly {
         userUntil.setSunccess(true);
         return userUntil;
     }
+
+    @RequestMapping("/user/doAssignRole")
+    public String doAssignRole(Integer id, HttpSession httpSession) {
+        List<TRole> roles = loginService.queryRoleAll();
+        List<TRole> rightRoleList = loginService.queryRoleID(id);
+        ArrayList<TRole> leftRoleList = new ArrayList<>();
+        for (TRole role1 : roles) {
+            if (!rightRoleList.contains(role1)) {
+                leftRoleList.add(role1);
+            }
+        }
+
+        httpSession.setAttribute("leftRoleList", leftRoleList);
+        httpSession.setAttribute("rightRoleList", rightRoleList);
+
+
+        return "user/assignrole";
+    }
+
+    @ResponseBody
+    @RequestMapping("/user/doAssignRole01")
+    public UserUntil doAssignRole01(Integer userid, Integer[] ids) {
+
+
+        UserUntil userUntil = new UserUntil();
+        try {
+            loginService.doAssignRole01(userid, ids);
+        } catch (LoadException e) {
+            e.printStackTrace();
+            userUntil.setSunccess(false);
+            return userUntil;
+        }
+        userUntil.setSunccess(true);
+        return userUntil;
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/user/doUnAssignRole02")
+    public UserUntil doUnAssignRole02(Integer userid, Integer[] ids) {
+        UserUntil userUntil = new UserUntil();
+        try {
+            loginService.doUnAssignRole02(userid, ids);
+        } catch (LoadException e) {
+            e.printStackTrace();
+            userUntil.setSunccess(false);
+            return userUntil;
+        }
+        userUntil.setSunccess(true);
+        return userUntil;
+    }
+
 
 }
