@@ -16,6 +16,16 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <mvc:interceptors>
+        <!--声明第一个拦截器-->
+        <mvc:interceptor>
+            <!--拦截的请求uri地址-->
+            <mvc:mapping path="/*"/>
+            <!--指定拦截器对象，拦截器的权限定类名-->
+            <bean class="com.beijing.mapper.MyInter"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
     <mvc:annotation-driven/>
 
 </beans>

@@ -254,10 +254,12 @@
                     content+='	  <button type="button" onclick="deleteUser('+n.id+',\''+n.loginacct+'\')" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>';
                     content+='  </td>';
                     content+='</tr>';
+
+                    $("tbody").html(content);
                 });
 
 
-                $("tbody").html(content);
+
 
                 var contentBar = '';
 

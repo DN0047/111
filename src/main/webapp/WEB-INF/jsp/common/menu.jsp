@@ -20,6 +20,7 @@
 			</ul>
 		</li>
 	</c:if>
+
 	</c:forEach>
 	<%--
 	<li class="list-group-item tree-closed">

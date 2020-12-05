@@ -1,6 +1,9 @@
 package com.beijing.bean;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TPermission {
 
   private long id;
@@ -8,7 +11,33 @@ public class TPermission {
   private String name;
   private String icon;
   private String url;
+  public List<TPermission> children = new ArrayList<>();
+  private boolean open;
+  private boolean checked;
 
+  public boolean isChecked() {
+    return checked;
+  }
+
+  public void setChecked(boolean checked) {
+    this.checked = checked;
+  }
+
+  public List<TPermission> getChildren() {
+    return children;
+  }
+
+  public void setChildren(List<TPermission> children) {
+    this.children = children;
+  }
+
+  public boolean isOpen() {
+    return open;
+  }
+
+  public void setOpen(boolean open) {
+    this.open = open;
+  }
 
   public long getId() {
     return id;

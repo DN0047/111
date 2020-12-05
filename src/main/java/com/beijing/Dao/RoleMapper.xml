@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.beijing.Dao.RoleMapper">
+    <select id="queryRole" resultType="TRole">
+        select *
+        from t_role
+        limit #{indexOf},#{pagesize}
+    </select>
+
+    <select id="queryRoleText" resultType="TRole">
+        select *
+        from t_role
+        where name like '%' #{queryText} '%'
+    </select>
+    <select id="queryRole1" resultType="int">
+        select count(*)
+        from t_role
+    </select>
+    <select id="queryRol" resultType="int">
+        select permissionid
+        from t_role_permission
+        where roleid = #{roleid}
+    </select>
+
+    <insert id="addRole">
+        insert into t_role_permission(permissionid, roleid) VALUES
+        <foreach collection="cc" separator="," item="cc">
+            (#{cc},#{roleid})
+
+        </foreach>
+
+    </insert>
+
+    <update id="updateEdit">
+        update t_role
+        set name=#{name}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRoleAll">
+        delete
+        from t_role_permission
+        where roleid = #{uid}
+    </delete>
+
+
+    <delete id="deleteRole">
+
+        delete
+        from t_role
+        where id = #{uid}
+    </delete>
+
+    <insert id="doAddRole">
+        insert into t_role (name)
+        values (#{name})
+    </insert>
+
+    <delete id="dRoAll">
+        delete from t_role_permission where roleid in
+        <foreach collection="array" item="datas" open="(" close=")" separator=",">
+            #{datas}
+        </foreach>
+    </delete>
+
+    <delete id="deleteAll">
+        delete from t_role where id in
+        <foreach collection="array" item="datas" open="(" close=")" separator=",">
+            #{datas}
+        </foreach>
+    </delete>
+
+</mapper>

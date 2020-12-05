@@ -1,5 +1,6 @@
 package com.beijing.Until;
 
+import com.beijing.bean.TRole;
 import com.beijing.bean.TUser;
 
 import java.util.List;
@@ -7,10 +8,10 @@ import java.util.List;
 public class Page {
     private Integer pageno;
     private Integer pagesize;
-    private Integer totalno;
-    private Integer totalsize;
+    private Integer totalno;//总共多少条
+    private Integer totalsize;//总共多少页
     public List<TUser> listpage;
-
+    public List<TRole> list;
     private String queryText;
 
     public Page() {

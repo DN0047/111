@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Comparator;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class text  {
@@ -17,8 +20,6 @@ public class text  {
     public static void main(String[] args) {
 
         ReentrantLock reentrantLock = new ReentrantLock();
-        reentrantLock.lock();
-        reentrantLock.unlock();
 
 
     }

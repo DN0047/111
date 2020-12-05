@@ -3,19 +3,24 @@ package com.beijing.wz;
 
 import com.beijing.Until.Page;
 import com.beijing.Until.UserUntil;
+import com.beijing.bean.TPermission;
 import com.beijing.bean.TRole;
 import com.beijing.bean.TUser;
 import com.beijing.service.LoginService;
 
+import com.beijing.service.PermissionService;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import javafx.fxml.LoadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -25,6 +30,9 @@ public class controlly {
     @Autowired
     private LoginService loginService;
 
+    @Autowired
+    PermissionService permissionService;
+
     @RequestMapping("/some")
     public String index() {
 
@@ -32,7 +40,12 @@ public class controlly {
     }
 
     @RequestMapping("/main")
-    public String manin() {
+    public String manin(HttpSession httpSession) {
+
+
+
+
+
 
         return "main";
     }
@@ -42,7 +55,7 @@ public class controlly {
     @RequestMapping("doLogin")
     @ResponseBody
     public UserUntil login(String Loginacct, String userpswd, String type, HttpSession httpSession) {
-        System.out.println("333");
+
         UserUntil userUntil = new UserUntil();
         TUser tUser = null;
         try {
@@ -60,6 +73,10 @@ public class controlly {
 
 
     }
+
+
+
+
 
     @RequestMapping("/user")
     public String userIndex() {
@@ -216,6 +233,12 @@ public class controlly {
         }
         userUntil.setSunccess(true);
         return userUntil;
+    }
+
+    @RequestMapping("/permission")
+    public String permission() {
+
+        return "permission/index";
     }
 
 
